@@ -19,7 +19,7 @@ dependencies:
 
     virtualenv env
     . env/bin/activate
-    git clone https://github.com/pudo/lobbyfacts.git
+    git clone https://github.com/stef/lobbyfacts.git
     cd lobbyfacts
     pip install -r requirements.txt
     pip install -e . 
