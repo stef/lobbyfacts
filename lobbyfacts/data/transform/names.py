@@ -10,12 +10,12 @@ log = logging.getLogger(__name__)
 DATASET = 'openinterests-entities'
 
 def map_names(map_func, engine, table_name, source_column='name',
-        out_column='canonical_name', **kw):
+              out_column='canonical_name', filt={}, **kw):
     table = sl.get_table(engine, table_name)
     seen_values = set([None])
     log.info("Normalising names on '%s', column '%s'...", table_name,
              source_column)
-    for row in sl.find(engine, table):
+    for row in sl.find(engine, table, **filt):
         value = row.get(source_column)
         if value in seen_values:
             continue
@@ -49,7 +49,7 @@ def transform(engine):
     map_names(names_func, engine, 'organisation', readonly=True)
     map_names(names_func, engine, 'network_entity', readonly=True)
     map_names(names_func, engine, 'expertgroup_member', readonly=True)
-
+    map_names(names_func, engine, 'meeting', 'representative', filt={'identification_code': 'unregistered'})
 
 if __name__ == '__main__':
     engine = etl_engine()
