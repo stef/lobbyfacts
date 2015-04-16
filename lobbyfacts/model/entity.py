@@ -30,9 +30,9 @@ class Entity(db.Model, RevisionedMixIn, ApiEntityMixIn):
 
     def as_dict(self):
         d = self.as_shallow()
-        d['person'] = self.person.as_shallow() if self.person else None
-        d['organisation'] = self.organisation.as_shallow() if self.organisation else None
-        d['representative'] = self.representative.as_shallow() if self.representative else None
+        d['person'] = self.person.as_shallow() if hasattr(self.person, 'as_shallow') else None
+        d['organisation'] = self.organisation.as_shallow() if hasattr(self.organisation, 'as_shallow') else None
+        d['representative'] = self.representative.as_shallow() if hasattr(self.representative, 'as_shallow') else None
         d['turnovers'] = [ft.as_dict(entity=False) for ft in self.turnovers]
         return d
 
