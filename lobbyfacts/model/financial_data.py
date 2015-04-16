@@ -170,6 +170,8 @@ class FinancialTurnover(db.Model, RevisionedMixIn, ApiEntityMixIn):
         d = super(FinancialTurnover, self).as_dict()
         d.update({
             'uri': self.uri,
+            'max': self.max,
+            'min': self.min,
             })
         if financial_data:
             d['financial_data'] = self.financial_data.as_shallow()
