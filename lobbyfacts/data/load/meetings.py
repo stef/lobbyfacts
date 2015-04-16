@@ -44,7 +44,7 @@ def load_meeting(engine, meet):
         #print "could not match", meet['identification_code']
         pass
     else:
-        print "\o/ match", meet['representative'], meet['identification_code']
+        #print "\o/ match", meet['representative'], meet['identification_code']
         if rep not in meeting.participants:
             meeting.participants.append(rep)
 
