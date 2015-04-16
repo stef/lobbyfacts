@@ -31,6 +31,10 @@ SUBCATEGORIES = {
     }
 
 newcats = {u'II - In-house lobbyists and trade/business/professional associations': u'II - In-house lobbyists and trade/professional associations'}
+newsubcats = { u'Other organisations':u'Other similar organisations',
+               u'Trade and business associations': u'Trade, business & professional associations',
+               u'Other sub-national public authorities': u'Local, regional and municipal authorities (at sub-national level)',
+             }
 
 def code_categories(engine):
     table = sl.get_table(engine, 'representative')
@@ -44,9 +48,9 @@ def code_categories(engine):
 def code_subcategories(engine):
     table = sl.get_table(engine, 'representative')
     for cat in sl.distinct(engine, table, 'sub_category'):
-        cat['sub_category_id'] = SUBCATEGORIES.get(cat['sub_category'])
+        c=newsubcats.get(cat['sub_category'],cat['sub_category'])
+        cat['sub_category_id'] = SUBCATEGORIES.get(c)
         sl.upsert(engine, table, cat, ['sub_category'])
-
 
 def transform(engine):
     log.info("Performing micro-transforms...")
