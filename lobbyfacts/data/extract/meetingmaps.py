@@ -91,6 +91,8 @@ uuids = [ (u'President Jean-Claude Juncker', u'http://ec.europa.eu/transparencyi
           (u'Director-General Walter Radermacher', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=b85b3c8d-483b-4e3d-b066-160c467e2884'),
           (u'Director-General Xavier Prats Monn\xe9', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=9bd9f7c0-836e-4ff6-abf4-a1f8650861cb'),
           (u'Director-General Ann Mettler', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=0d0d638f-322e-44fc-8c9c-875438c4a719'),
+          (u'Director of the Office Marc Lemaître', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=c9dd58ff-4f2e-4e64-83c0-0ef45573239d'),
+          (u'Director-General Irene Souka', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=5f6cf615-e3f3-495a-846a-9ccc191e86fc'),
           (u'Secretary-General Catherine Day', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=394df231-6f63-43a1-ac2f-a5c6c2aea0b7') ]
 
 entmap = {
