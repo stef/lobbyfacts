@@ -2,7 +2,7 @@ from lobbyfacts.core import db
 from lobbyfacts.model.revision import RevisionedMixIn
 from lobbyfacts.model.representative import Representative
 
-class MeetingParticipants(db.Model):
+class MeetingParticipants(db.Model, RevisionedMixIn):
     __tablename__ = 'meeting_participants'
     representative_id = db.Column('representative_id', db.String(36), db.ForeignKey('representative.id'), primary_key=True)
     meeting_id = db.Column('meeting_id', db.String(32), db.ForeignKey('meeting.id'), primary_key=True)
