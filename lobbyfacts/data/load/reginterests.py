@@ -7,6 +7,7 @@ from lobbyfacts.model import Entity, Representative, Country, Category
 from lobbyfacts.model import Organisation, OrganisationMembership, Person
 from lobbyfacts.model import Accreditation, FinancialData, FinancialTurnover
 from lobbyfacts.model import CountryMembership, ActionField, AssociatedAction
+from lobbyfacts.model import Interest, AssociatedInterest
 from lobbyfacts.data.load.util import to_integer, to_float, upsert_person
 from lobbyfacts.data.load.util import upsert_person, upsert_organisation, upsert_entity, upsert_tag
 from lobbyfacts.core import app
@@ -173,6 +174,24 @@ def load_representative(engine, rep):
             db.session.commit()
         else:
             am.update(adata)
+
+    for interest_ in sl.find(engine, sl.get_table(engine, 'interest'),
+            representative_etl_id=rep['etl_id']):
+        if not interest_.get('interest'): continue
+        i = Interest.by_interest(interest_.get('interest'))
+        if i is None:
+            i = Interest.create({'interest': interest_.get('interest')})
+            db.session.commit()
+        adata = {'representative': representative,
+                 'status': action_.get('status'),
+                 'interest': i}
+
+        ai = AssociatedInterest.by_rpi(representative, i)
+        if ai is None:
+            ai = AssociatedInterest.create(adata)
+            db.session.commit()
+        else:
+            ai.update(adata)
 
     for taglink in sl.find(engine, sl.get_table(engine, 'tags'),
             representative_id=rep['id']):
