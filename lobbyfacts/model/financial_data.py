@@ -30,6 +30,7 @@ class FinancialData(db.Model, RevisionedMixIn, ApiEntityMixIn):
     eur_sources_procurement_src = db.Column(db.Unicode)
     eur_sources_grants_src = db.Column(db.Unicode)
     other_financial_information = db.Column(db.Unicode)
+    new_organisation = db.Column(db.Unicode)
 
     status = db.Column(db.Unicode)
     start_date = db.Column(db.DateTime)
@@ -60,6 +61,7 @@ class FinancialData(db.Model, RevisionedMixIn, ApiEntityMixIn):
         self.eur_sources_procurement_src = data.get('eur_sources_procurement_src')
         self.eur_sources_grants_src = data.get('eur_sources_grants_src')
         self.other_financial_information = data.get('other_financial_information')
+        self.new_organisation = data.get('new_organisation')
         self.start_date = data.get('start_date')
         self.end_date = data.get('end_date')
         self.type = data.get('type')
@@ -102,6 +104,7 @@ class FinancialData(db.Model, RevisionedMixIn, ApiEntityMixIn):
             'eur_sources_procurement_src': self.eur_sources_procurement_src,
             'eur_sources_grants_src': self.eur_sources_grants_src,
             'other_financial_information': self.other_financial_information,
+            'new_organisation': self.new_organisation,
             'status': self.status,
             'representative': self.representative.id,
             })
