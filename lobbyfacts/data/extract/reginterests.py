@@ -130,10 +130,12 @@ def parse_rep(rep_el):
 
     fd_el = rep_el.find(NS + 'financialData')
     fd = {}
+    rep['new_organisation'] = fd_el.findtext(NS + 'newOrganisation')
     try:
         fd['start_date'] = dateconv(fd_el.findtext(NS + 'startDate'))
     except AttributeError:
-        print >>sys.stderr, '[x] missing financial data, check out:', rep['identification_code']
+        if rep['new_organisation'] != 'true':
+            print >>sys.stderr, '[x] missing financial data, check out:', rep['identification_code']
         rep['fd'] = fd
         return rep
     fd['end_date'] = dateconv(fd_el.findtext(NS + 'endDate'))
@@ -223,7 +225,7 @@ def parse_rep(rep_el):
                     'min': intconv(min_),
                     'max': intconv(max_)
                     })
-    fd['other_financial_information'] = rep_el.findtext(NS + 'otherFinancialInformation')
+    fd['other_financial_information'] = fd_el.findtext(NS + 'otherFinancialInformation')
     rep['fd'] = fd
     return rep
 
@@ -335,6 +337,7 @@ def extract(engine):
         sl.update(engine, 'organisation', {}, {'status': 'inactive'}, ensure=False)
         sl.update(engine, 'accreditation', {}, {'status': 'inactive'}, ensure=False)
         sl.update(engine, 'country_of_member', {}, {'status': 'inactive'}, ensure=False)
+        sl.update(engine, 'associated_action', {}, {'status': 'inactive'}, ensure=False)
     except sqlalchemy.exc.CompileError:
         pass
 
