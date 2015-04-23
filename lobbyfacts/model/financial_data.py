@@ -138,6 +138,7 @@ class FinancialTurnover(db.Model, RevisionedMixIn, ApiEntityMixIn):
     financial_data_id = db.Column(db.String(36), db.ForeignKey('financial_data.id'))
     entity_id = db.Column(db.String(36), db.ForeignKey('entity.id'))
 
+    new = db.Column(db.Boolean)
     min = db.Column(db.Integer)
     max = db.Column(db.Integer)
     status = db.Column(db.Unicode)
@@ -147,6 +148,7 @@ class FinancialTurnover(db.Model, RevisionedMixIn, ApiEntityMixIn):
         self.entity = data.get('entity')
         self.status = data.get('status')
 
+        self.new = data.get('new')
         self.min = data.get('min')
         self.max = data.get('max')
 
@@ -163,6 +165,7 @@ class FinancialTurnover(db.Model, RevisionedMixIn, ApiEntityMixIn):
             'financial_data_id': self.financial_data_id,
             'entity_id': self.entity_id,
             'name': self.entity.name if self.entity else None, # curve
+            'new': self.new,
             'min': self.min,
             'max': self.max,
             'status': self.status,
@@ -173,6 +176,7 @@ class FinancialTurnover(db.Model, RevisionedMixIn, ApiEntityMixIn):
         d = super(FinancialTurnover, self).as_dict()
         d.update({
             'uri': self.uri,
+            'new': self.new,
             'max': self.max,
             'min': self.min,
             })

@@ -194,37 +194,42 @@ def parse_rep(rep_el):
         'turnover//' + NS + 'max'))
     fd['turnover_absolute'] = intconv(fi.findtext('.//' + NS +
         'turnover//' + NS + 'absoluteAmount'))
-    tb = fi.find(NS + 'turnoverBreakdown')
+
     fd['turnover_breakdown'] = []
-    if tb is not None:
-        for range_ in tb.findall(NS + 'customersGroupsInAbsoluteRange'):
-            max_ = range_.findtext('.//' + NS + 'max')
-            min_ = range_.findtext('.//' + NS + 'min')
-            for customer in range_.findall('.//' + NS + 'customer'):
-                fd['turnover_breakdown'].append({
-                    'name': customer.findtext(NS + 'name'),
-                    'min': intconv(min_),
-                    'max': intconv(max_)
-                    })
-        for range_ in tb.findall(NS + 'customersGroupsInPercentageRange'):
-            # FIXME: I hate political compromises going into DB design
-            # so directly.
-            max_ = range_.findtext('.//' + NS + 'max')
-            if max_:
-                max_ = float(max_) / 100.0 * \
-                        float(fd['turnover_absolute'] or
-                              fd['turnover_max'] or fd['turnover_min'])
-            min_ = range_.findtext('.//' + NS + 'min')
-            if min_:
-                min_ = float(min_) / 100.0 * \
-                        float(fd['turnover_absolute'] or
-                              fd['turnover_min'] or fd['turnover_max'])
-            for customer in range_.findall('.//' + NS + 'customer'):
-                fd['turnover_breakdown'].append({
-                    'name': customer.findtext(NS + 'name'),
-                    'min': intconv(min_),
-                    'max': intconv(max_)
-                    })
+    for tag in ['turnoverBreakdown', 'newTurnoverBreakdown']:
+        tb = fi.find(NS + tag)
+        newbd = (tag == 'newTurnoverBreakdown')
+        if tb is not None:
+            for range_ in tb.findall(NS + 'customersGroupsInAbsoluteRange'):
+                max_ = range_.findtext('.//' + NS + 'max')
+                min_ = range_.findtext('.//' + NS + 'min')
+                for customer in range_.findall('.//' + NS + 'customer'):
+                    fd['turnover_breakdown'].append({
+                        'name': customer.findtext(NS + 'name'),
+                        'new': newbd,
+                        'min': intconv(min_),
+                        'max': intconv(max_)
+                        })
+            for range_ in tb.findall(NS + 'customersGroupsInPercentageRange'):
+                # FIXME: I hate political compromises going into DB design
+                # so directly.
+                max_ = range_.findtext('.//' + NS + 'max')
+                if max_:
+                    max_ = float(max_) / 100.0 * \
+                            float(fd['turnover_absolute'] or
+                                  fd['turnover_max'] or fd['turnover_min'])
+                min_ = range_.findtext('.//' + NS + 'min')
+                if min_:
+                    min_ = float(min_) / 100.0 * \
+                            float(fd['turnover_absolute'] or
+                                  fd['turnover_min'] or fd['turnover_max'])
+                for customer in range_.findall('.//' + NS + 'customer'):
+                    fd['turnover_breakdown'].append({
+                        'name': customer.findtext(NS + 'name'),
+                        'new': newbd,
+                        'min': intconv(min_),
+                        'max': intconv(max_)
+                        })
     fd['other_financial_information'] = fd_el.findtext(NS + 'otherFinancialInformation')
     rep['fd'] = fd
     return rep
