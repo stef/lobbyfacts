@@ -33,7 +33,9 @@ SUBCATEGORIES = {
 newcats = {u'II - In-house lobbyists and trade/business/professional associations': u'II - In-house lobbyists and trade/professional associations'}
 newsubcats = { u'Other organisations':u'Other similar organisations',
                u'Trade and business associations': u'Trade, business & professional associations',
+               u'Trade unions and professional associations': u'Trade, business & professional associations',
                u'Other sub-national public authorities': u'Local, regional and municipal authorities (at sub-national level)',
+               u'Regional structures': u'Local, regional and municipal authorities (at sub-national level)',
              }
 
 def code_categories(engine):
