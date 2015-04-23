@@ -203,6 +203,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
             'legal': self.legal.as_shallow() if self.legal else None,
             'financial_data': [fd.as_shallow(turnovers=True) for fd in self.financial_datas],
             'organisation_memberships': [om.as_dict(representative=False) for om in self.organisation_memberships],
+            'action_fields': [af.action for af in self.action_fields],
             'accreditations': [a.as_dict(representative=False) for a in self.accreditations],
             'tags': [t.tag for t in self.tags]
             })

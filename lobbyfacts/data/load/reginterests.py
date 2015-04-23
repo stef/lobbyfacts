@@ -6,7 +6,7 @@ from lobbyfacts.data import sl, etl_engine
 from lobbyfacts.model import Entity, Representative, Country, Category
 from lobbyfacts.model import Organisation, OrganisationMembership, Person
 from lobbyfacts.model import Accreditation, FinancialData, FinancialTurnover
-from lobbyfacts.model import CountryMembership
+from lobbyfacts.model import CountryMembership, ActionField, AssociatedAction
 from lobbyfacts.data.load.util import to_integer, to_float, upsert_person
 from lobbyfacts.data.load.util import upsert_person, upsert_organisation, upsert_entity, upsert_tag
 from lobbyfacts.core import app
@@ -103,6 +103,7 @@ def load_representative(engine, rep):
         fd['eur_sources_procurement_src'] = fd.get('eur_sources_procurement_src')
         fd['eur_sources_grants_src'] = fd.get('eur_sources_grants_src')
         fd['other_financial_information'] = fd.get('other_financial_information')
+        fd['new_organisation'] = fd.get('new_organisation')
         fd['representative'] = representative
         financial_data = FinancialData.by_rsd(representative, fd.get('start_date'))
         if financial_data is None:
@@ -154,6 +155,24 @@ def load_representative(engine, rep):
             cm = CountryMembership.create(cdata)
         else:
             cm.update(cdata)
+
+    for action_ in sl.find(engine, sl.get_table(engine, 'action_field'),
+            representative_etl_id=rep['etl_id']):
+        if not action_.get('action_field'): continue
+        af = ActionField.by_action(action_.get('action_field'))
+        if af is None:
+            af = ActionField.create({'action': action_.get('action_field')})
+            db.session.commit()
+        adata = {'representative': representative,
+                 'status': action_.get('status'),
+                 'action': af}
+
+        am = AssociatedAction.by_rpa(representative, af)
+        if am is None:
+            am = AssociatedAction.create(adata)
+            db.session.commit()
+        else:
+            am.update(adata)
 
     for taglink in sl.find(engine, sl.get_table(engine, 'tags'),
             representative_id=rep['id']):

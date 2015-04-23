@@ -9,6 +9,7 @@ from lobbyfacts.model.organisation import Organisation, OrganisationMembership
 from lobbyfacts.model.financial_data import FinancialData, FinancialTurnover
 from lobbyfacts.model.tag import Tag
 from lobbyfacts.model.meeting import Meeting, MeetingParticipants
+from lobbyfacts.model.action import ActionField, AssociatedAction
 
 from lobbyfacts.model.reports import test_report, rep_by_exp, rep_by_country
 from lobbyfacts.model.reports import representatives, places, reps_by_accredited
