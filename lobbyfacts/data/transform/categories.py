@@ -36,26 +36,42 @@ newsubcats = { u'Other organisations':u'Other similar organisations',
                u'Trade unions and professional associations': u'Trade, business & professional associations',
                u'Other sub-national public authorities': u'Local, regional and municipal authorities (at sub-national level)',
                u'Regional structures': u'Local, regional and municipal authorities (at sub-national level)',
+               u'Other public or mixed entities, created by law whose purpose is to act in the public interest': u'Other public or mixed entities, etc.',
+               u'Transnational associations and networks of public regional or other sub-national authorities': u'Local, regional and municipal authorities (at sub-national level)',
              }
+
+def remap_categories(engine):
+    table = sl.get_table(engine, 'representative')
+    for cat in sl.distinct(engine, table, 'main_category'):
+        c=newcats.get(cat['main_category'])
+        if c:
+           sl.update(engine, 'representative', {'main_category': cat['main_category']}, {'main_category': c}, ensure=False)
+
+def remap_subcategories(engine):
+    table = sl.get_table(engine, 'representative')
+    for cat in sl.distinct(engine, table, 'sub_category'):
+        c=newsubcats.get(cat['sub_category'])
+        if c:
+           sl.update(engine, 'representative', {'sub_category': cat['sub_category']}, {'sub_category': c}, ensure=False)
 
 def code_categories(engine):
     table = sl.get_table(engine, 'representative')
     for cat in sl.distinct(engine, table, 'main_category'):
         if not cat['main_category']: continue
-        c=newcats.get(cat['main_category'],cat['main_category'])
-        cat['main_category_id'] = CATEGORIES[c]
+        cat['main_category_id'] = CATEGORIES[cat['main_category']]
         sl.upsert(engine, table, cat, ['main_category'])
-
 
 def code_subcategories(engine):
     table = sl.get_table(engine, 'representative')
     for cat in sl.distinct(engine, table, 'sub_category'):
-        c=newsubcats.get(cat['sub_category'],cat['sub_category'])
-        cat['sub_category_id'] = SUBCATEGORIES.get(c)
+        if not cat['sub_category']: continue
+        cat['sub_category_id'] = SUBCATEGORIES.get(cat['sub_category'])
         sl.upsert(engine, table, cat, ['sub_category'])
 
 def transform(engine):
     log.info("Performing micro-transforms...")
+    remap_categories(engine)
+    remap_subcategories(engine)
     code_categories(engine)
     code_subcategories(engine)
 
