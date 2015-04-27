@@ -82,6 +82,8 @@ def make_entity_api(cls):
         count = q.count()
         if q.has_fts:
             q = q.order_by('ts_rank_cd(entity.full_text, plainto_tsquery(:ftsq)) DESC')
+        else:
+            q = q.order_by('id DESC')
         limit = get_limit()
         q = q.limit(limit)
         offset = get_offset()
