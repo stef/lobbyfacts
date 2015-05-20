@@ -34,19 +34,28 @@ def load_meeting(engine, meet):
     else:
         if meet['identification_code'] == 'unregistered':
             if meeting.unregistered:
-                meet['unregistered']='; '.join((meeting.unregistered, meet['representative']))
+                meet['unregistered']='; '.join(sorted(set(meeting.unregistered.split('; ')+[meet['representative']])))
             else:
                 meet['unregistered']=meet['representative']
         meeting.update(meet)
 
-    rep = Representative.by_identification_code(meet['identification_code'])
-    if rep is None:
-        #print "could not match", meet['identification_code']
-        pass
-    else:
-        #print "\o/ match", meet['representative'], meet['identification_code']
-        if rep not in meeting.participants:
-            meeting.participants.append(rep)
+    if  meet['identification_code'] != 'unregistered':
+        rep = Representative.by_identification_code(meet['identification_code'])
+        if rep is None:
+            #print "could not match", meet['identification_code']
+            if meeting.unregistered:
+                meeting.unregistered='; '.join(sorted(set(meeting.unregistered.split('; ')+
+                                                        ["%s(%s)" % (meet['representative'],
+                                                                     meet['identification_code'])])))
+                print 'appended', meeting.unregistered
+            else:
+                meeting.unregistered="%s(%s)" % (meet['representative'],meet['identification_code'])
+                print 'created', meeting.unregistered
+
+        else:
+            #print "\o/ match", meet['representative'], meet['identification_code']
+            if rep not in meeting.participants:
+                meeting.participants.append(rep)
 
     db.session.commit()
 
