@@ -6,7 +6,7 @@ from lobbyfacts.model.country import Country, CountryMembership
 from lobbyfacts.model.category import Category
 from lobbyfacts.model.person import Person, Accreditation
 from lobbyfacts.model.organisation import Organisation, OrganisationMembership
-from lobbyfacts.model.financial_data import FinancialData, FinancialTurnover
+from lobbyfacts.model.financial_data import FinancialData, FinancialTurnover, CustomIncome
 from lobbyfacts.model.tag import Tag
 from lobbyfacts.model.meeting import Meeting, MeetingParticipants
 from lobbyfacts.model.action import ActionField, AssociatedAction

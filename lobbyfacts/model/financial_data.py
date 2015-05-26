@@ -112,6 +112,7 @@ class FinancialData(db.Model, RevisionedMixIn, ApiEntityMixIn):
             d['id']=self.id
         if turnovers:
             d['turnovers'] = [t.as_dict(financial_data=False) for t in self.turnovers]
+        d['customIncomes'] = [c.as_dict(financial_data=False) for c in self.custsources]
         return d
 
     def as_dict(self):
@@ -203,3 +204,60 @@ Entity.turnovers = db.relationship('FinancialTurnover',
                 uselist=False,
                 ))
 
+
+class CustomIncome(db.Model, RevisionedMixIn, ApiEntityMixIn):
+    __tablename__ = 'custom_income'
+
+    financial_data_id = db.Column(db.String(36), db.ForeignKey('financial_data.id'))
+    name = db.Column(db.Unicode)
+    amount = db.Column(db.Integer)
+    type = db.Column(db.Unicode)
+    status = db.Column(db.Unicode)
+
+    def update_values(self, data):
+        self.financial_data = data.get('financial_data')
+        self.status = data.get('status')
+
+        self.name = data.get('name')
+        self.amount = data.get('amount')
+        self.type = data.get('type')
+
+    @classmethod
+    def by_fdn(cls, financial_data, name):
+        q = db.session.query(cls)
+        q = q.filter(cls.financial_data_id==financial_data.id)
+        q = q.filter(cls.name==name)
+        return q.first()
+
+    def as_shallow(self):
+        d = super(CustomIncome, self).as_dict()
+        d.update({
+            'financial_data_id': self.financial_data_id,
+            'type': self.type,
+            'amount': self.amount,
+            'name': self.name,
+            'status': self.status,
+            })
+        return d
+
+    def as_dict(self, financial_data=True, entity=True):
+        d = super(CustomIncome, self).as_dict()
+        d.update({
+            'uri': self.uri,
+            'name': self.name,
+            'amount': self.amount,
+            'type': self.type,
+            'status': self.status,
+            })
+        if financial_data:
+            d['financial_data'] = self.financial_data.as_shallow()
+        return d
+
+    def __repr__(self):
+        return "<CustomizedSource(%r,%s:%s)>" % (self.financial_data, self.name, self.amount)
+
+FinancialData.custsources = db.relationship('CustomIncome',
+            lazy='dynamic',
+            backref=db.backref('financial_data',
+                uselist=False,
+                ))

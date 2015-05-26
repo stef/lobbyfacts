@@ -157,7 +157,7 @@ def parse_rep(rep_el):
     cps = fi.find('.//' + NS + 'customisedPublicSources')
     fd['public_customized'] = []
     if cps is not None:
-        for src_el in cps.findall(NS + 'customizedSource'):
+        for src_el in cps.findall('.//' + NS + 'customisedSource'):
             src = {}
             src['name'] = src_el.findtext(NS + 'name')
             src['amount'] = intconv(src_el.findtext(NS + 'amount'))
@@ -172,7 +172,7 @@ def parse_rep(rep_el):
     cps = fi.find('.//' + NS + 'customisedOther')
     fd['other_customized'] = []
     if cps is not None:
-        for src_el in cps.findall(NS + 'customizedSource'):
+        for src_el in cps.findall('.//' + NS + 'customisedSource'):
             src = {}
             src['name'] = src_el.findtext(NS + 'name')
             src['amount'] = intconv(src_el.findtext(NS + 'amount'))

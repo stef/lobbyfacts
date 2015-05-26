@@ -7,7 +7,7 @@ from lobbyfacts.model import Entity, Representative, Country, Category
 from lobbyfacts.model import Organisation, OrganisationMembership, Person
 from lobbyfacts.model import Accreditation, FinancialData, FinancialTurnover
 from lobbyfacts.model import CountryMembership, ActionField, AssociatedAction
-from lobbyfacts.model import Interest, AssociatedInterest
+from lobbyfacts.model import Interest, AssociatedInterest, CustomIncome
 from lobbyfacts.data.load.util import to_integer, to_float, upsert_person
 from lobbyfacts.data.load.util import upsert_person, upsert_organisation, upsert_entity, upsert_tag
 from lobbyfacts.core import app
@@ -112,6 +112,16 @@ def load_representative(engine, rep):
             financial_data = FinancialData.create(fd)
         else:
             financial_data.update(fd)
+
+        for src_ in sl.find(engine, sl.get_table(engine, 'financial_data_custom_source'),
+                representative_etl_id=rep['etl_id'], financial_data_etl_id=fd['etl_id']):
+            src_['financial_data'] = financial_data
+            src_['amount'] = to_integer(src_.get('amount'))
+            src = CustomIncome.by_fdn(financial_data, src_['name'])
+            if src is None:
+                src = CustomIncome.create(src_)
+            else:
+                src.update(src_)
 
         for turnover_ in sl.find(engine, sl.get_table(engine, 'financial_data_turnover'),
                 representative_etl_id=rep['etl_id'], financial_data_etl_id=fd['etl_id']):

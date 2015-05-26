@@ -4,14 +4,15 @@ from lobbyfacts.views.api import make_entity_api
 from lobbyfacts.views.reports import reports
 from lobbyfacts.model import Entity, Country, Representative, Organisation
 from lobbyfacts.model import Person, Category, Accreditation, OrganisationMembership
-from lobbyfacts.model import FinancialData, FinancialTurnover, Tags, Meeting, MeetingParticipants
+from lobbyfacts.model import FinancialData, FinancialTurnover, Tags, Meeting
+from lobbyfacts.model import MeetingParticipants, CustomIncome
 
 API_PREFIX = '/api/1'
 
 for e in [Entity, Person, Category, Country, Representative,
           Organisation, Accreditation, OrganisationMembership,
           FinancialData, FinancialTurnover, Tags, Meeting,
-          MeetingParticipants]:
+          MeetingParticipants, CustomIncome]:
     app.register_blueprint(make_entity_api(e), url_prefix=API_PREFIX)
 
 app.register_blueprint(reports, url_prefix=API_PREFIX)
