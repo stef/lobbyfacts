@@ -50,7 +50,7 @@ def load_meeting(engine, meet):
                 print 'appended', meeting.unregistered
             else:
                 meeting.unregistered="%s(%s)" % (meet['representative'],meet['identification_code'])
-                print 'created', meeting.unregistered
+                print 'created', meeting.unregistered.encode('utf8')
 
         else:
             #print "\o/ match", meet['representative'], meet['identification_code']
