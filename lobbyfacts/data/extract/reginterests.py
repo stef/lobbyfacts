@@ -92,7 +92,9 @@ def parse_rep(rep_el):
     for lm, k in act_cats:
         rep[k] = rep_el.findtext('.//' + NS + 'activities/' + NS + lm)
 
-    rep['code_of_conduct'] = rep_el.findtext(NS + 'codeOfConduct')
+    rep['code_of_conduct'] = rep_el.findtext('.//' + NS + 'codeOfConduct')
+    # todo remove ohercodeofconduct in a few weeks time
+    rep['other_code_of_conduct'] = rep_el.findtext('.//' + NS + 'oherCodeOfConduct') or rep_el.findtext('.//' + NS + 'otherCodeOfConduct')
 
     rep['members_25'] = rep_el.findtext('.//' + NS + 'members25Percent')
     rep['members_50'] = rep_el.findtext('.//' + NS + 'members50Percent')
@@ -145,6 +147,7 @@ def parse_rep(rep_el):
     fd['eur_sources_grants_src'] = fd_el.findtext(NS + 'eurSourcesGrantsSrc')
     fi = fd_el.find(NS + 'financialInformation')
     fd['type'] = fi.get(SI + 'type')
+    fd['no_clients'] = fi.findtext(NS + 'noClientsInfo')
     #import ipdb; ipdb.set_trace()
     fd['total_budget'] = intconv(fi.findtext('.//' + NS +
         'totalBudget'))

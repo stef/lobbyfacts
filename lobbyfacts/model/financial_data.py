@@ -36,6 +36,7 @@ class FinancialData(db.Model, RevisionedMixIn, ApiEntityMixIn):
     start_date = db.Column(db.DateTime)
     end_date = db.Column(db.DateTime)
     type = db.Column(db.Unicode)
+    no_clients = db.Column(db.Unicode)
 
     def update_values(self, data):
         self.representative = data.get('representative')
@@ -65,6 +66,7 @@ class FinancialData(db.Model, RevisionedMixIn, ApiEntityMixIn):
         self.start_date = data.get('start_date')
         self.end_date = data.get('end_date')
         self.type = data.get('type')
+        self.no_clients = data.get('no_clients')
 
     def cascade_delete(self):
         for t in self.turnovers:
@@ -82,6 +84,7 @@ class FinancialData(db.Model, RevisionedMixIn, ApiEntityMixIn):
         d.update({
             'uri': self.uri,
             'type': self.type,
+            'no_clients': self.no_clients,
             'start_date': self.start_date,
             'end_date': self.end_date,
             'turnover_min': self.turnover_min,

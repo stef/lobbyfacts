@@ -43,6 +43,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
     networking = db.Column(db.Unicode)
     legal_status = db.Column(db.Unicode)
     code_of_conduct = db.Column(db.Unicode)
+    other_code_of_conduct = db.Column(db.Unicode)
     web_site_url = db.Column(db.Unicode)
     info_members = db.Column(db.Unicode)
     structure_members = db.Column(db.Unicode)
@@ -94,6 +95,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
         self.activity_relevant_comm = data.get('activity_relevant_comm')
         self.networking = data.get('networking')
         self.code_of_conduct = data.get('code_of_conduct')
+        self.other_code_of_conduct = data.get('other_code_of_conduct')
         self.web_site_url = data.get('web_site_url')
         self.legal_status = data.get('legal_status')
 
@@ -153,6 +155,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
             'activity_relevant_comm': self.activity_relevant_comm,
             'networking': self.networking,
             'code_of_conduct': self.code_of_conduct,
+            'other_code_of_conduct': self.other_code_of_conduct,
             'web_site_url': self.web_site_url,
             'legal_status': self.legal_status,
             'members_25': self.members_25,
