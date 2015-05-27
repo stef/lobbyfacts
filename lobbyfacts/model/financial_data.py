@@ -213,7 +213,7 @@ class CustomIncome(db.Model, RevisionedMixIn, ApiEntityMixIn):
 
     financial_data_id = db.Column(db.String(36), db.ForeignKey('financial_data.id'))
     name = db.Column(db.Unicode)
-    amount = db.Column(db.Integer)
+    amount = db.Column(db.BigInteger)
     type = db.Column(db.Unicode)
     status = db.Column(db.Unicode)
 
