@@ -56,7 +56,7 @@ class Meeting(db.Model, RevisionedMixIn):
             'date': self.date,
             'location': self.location,
             'subject': self.subject,
-            'participants': [(p.id,p.entity.name) for p in self.participants],
+            'participants': [(p.id,p.entity.name if p.entity else 'unknown') for p in self.participants],
             'unregistered': self.unregistered,
             'cancelled': self.cancelled})
         return d
