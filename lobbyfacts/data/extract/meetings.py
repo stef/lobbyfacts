@@ -11,6 +11,7 @@ from meetingmaps import entmap, uuids
 from datetime import date
 from lobbyfacts.data import sl, etl_engine
 import logging
+import sqlalchemy
 log = logging.getLogger(__name__)
 
 HEADERS =  { 'User-agent': 'lobbyfacts/1.2' }
@@ -101,6 +102,7 @@ def scrape(url, title):
             meetid = meetid.hexdigest()
             for entity, entity_id in entities:
                 yield {'name': name,
+                       'status': 'active',
                        'meetid': meetid,
                        'date': date,
                        'location': location,
@@ -114,6 +116,11 @@ def scrape(url, title):
 
 def extract(engine):
     table = sl.get_table(engine, 'meeting')
+    try:
+        sl.update(engine, 'meeting', {}, {'status': 'inactive'}, ensure=False)
+        sl.update(engine, 'meeting_participants', {}, {'status': 'inactive'}, ensure=False)
+    except sqlalchemy.exc.CompileError:
+        pass
 
     i=0
     for title, url in uuids:

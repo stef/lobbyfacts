@@ -6,9 +6,11 @@ class MeetingParticipants(db.Model, RevisionedMixIn):
     __tablename__ = 'meeting_participants'
     representative_id = db.Column('representative_id', db.String(36), db.ForeignKey('representative.id'), primary_key=True)
     meeting_id = db.Column('meeting_id', db.String(32), db.ForeignKey('meeting.id'), primary_key=True)
+    status = db.Column(db.Unicode)
 
     def as_shallow(self):
         return { 'representative': Representative.by_id(self.representative_id).entity.name,
+                 'status': self.status,
                  'meetings': Meeting.by_id(self.meeting_id),
                  'representative_id': self.representative_id }
 
@@ -29,6 +31,7 @@ class Meeting(db.Model, RevisionedMixIn):
     location = db.Column(db.Unicode)
     subject = db.Column(db.Unicode)
     participants = db.relationship("Representative", secondary=MeetingParticipants.__table__, backref='meetings')
+    status = db.Column(db.Unicode)
 
     unregistered = db.Column(db.Unicode)
     cancelled = db.Column(db.Boolean)
@@ -42,6 +45,7 @@ class Meeting(db.Model, RevisionedMixIn):
         self.subject = data.get('subject')
         self.unregistered = data.get('unregistered')
         self.cancelled = data.get('cancelled')
+        self.status = data.get('status')
 
     @classmethod
     def by_id(cls, id):
@@ -52,6 +56,7 @@ class Meeting(db.Model, RevisionedMixIn):
         d.update({
             'id': self.id,
             'ec_representative': self.ec_representative,
+            'status': self.status,
             'ec_org': self.ec_org,
             'date': self.date,
             'location': self.location,
