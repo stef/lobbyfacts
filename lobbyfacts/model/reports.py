@@ -6,7 +6,7 @@ from lobbyfacts.core import db
 from lobbyfacts.model.entity import Entity
 from lobbyfacts.model.country import Country
 from lobbyfacts.model.category import Category
-from lobbyfacts.model.representative import Representative, Tags
+from lobbyfacts.model.representative import Representative, Tags, Contact
 from lobbyfacts.model.financial_data import FinancialData
 from lobbyfacts.model.person import Accreditation
 from lobbyfacts.model.tag import Tag
@@ -46,15 +46,19 @@ def representatives(tag=None):
 def places(tag=None):
     """ Abridged version of representatives and locations. """
     q = db.session.query(Representative.id,
-            Representative.identification_code,
-            Representative.contact_town,
-            Representative.contact_street,
-            Representative.contact_lon,
-            Representative.contact_lat)
+            Representative.identification_code)
     q = filter_by_tag(q, tag)
     q = q.join(Entity)
     q = q.join(Country)
+    q = q.join(Contact, Representative.head_office)
     q = q.join(FinancialData)
+    q = q.add_column(Entity.name)
+    q = q.add_column(Contact.town)
+    q = q.add_column(Contact.street)
+    q = q.add_column(Contact.lat)
+    q = q.add_column(Contact.lon)
+    q = q.add_column(Entity.name)
+    q = q.add_column(Entity.name)
     q = q.add_column(Entity.name)
     q = q.add_column(FinancialData.turnover_min)
     q = q.add_column(FinancialData.turnover_max)

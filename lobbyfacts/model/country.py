@@ -18,7 +18,7 @@ class Country(db.Model, ApiEntityMixIn):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow,
             onupdate=datetime.utcnow)
 
-    representatives = db.relationship('Representative', 
+    representatives = db.relationship('Representative',
             backref='contact_country')
 
     @classmethod

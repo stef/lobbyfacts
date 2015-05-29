@@ -12,7 +12,7 @@ URL = "http://open.mapquestapi.com/nominatim/v1/search.php"
 
 def transform(engine):
     log.info("Geo-coding representatives...")
-    table = sl.get_table(engine, 'representative')
+    table = sl.get_table(engine, 'contact')
     for row in sl.all(engine, table):
         out = {'id': row['id']}
         if row.get('contact_lon'):
@@ -20,10 +20,10 @@ def transform(engine):
         query = {
             'format': 'json',
             'limit': 1,
-            'city': row.get('contact_town'),
-            'street': row.get('contact_street'),
-            'country': row.get('contact_country'),
-            'postalcode': row.get('contact_post_code')
+            'city': row.get('town'),
+            'street': row.get('street'),
+            'country': row.get('country'),
+            'postalcode': row.get('post_code')
             }
         response = requests.get(URL, params=query)
         try:
@@ -32,9 +32,9 @@ def transform(engine):
         if json and len(json):
             geo = json[0]
             log.info("%s @ %s", row.get('name'), geo.get('display_name'))
-            out['contact_geoname'] = geo.get('display_name')
-            out['contact_lon'] = geo.get('lon')
-            out['contact_lat'] = geo.get('lat')
+            out['geoname'] = geo.get('display_name')
+            out['lon'] = geo.get('lon')
+            out['lat'] = geo.get('lat')
             sl.upsert(engine, table, out, ['id'])
 
 if __name__ == '__main__':

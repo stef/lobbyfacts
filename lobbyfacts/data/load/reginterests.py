@@ -7,7 +7,7 @@ from lobbyfacts.model import Entity, Representative, Country, Category
 from lobbyfacts.model import Organisation, OrganisationMembership, Person
 from lobbyfacts.model import Accreditation, FinancialData, FinancialTurnover
 from lobbyfacts.model import CountryMembership, ActionField, AssociatedAction
-from lobbyfacts.model import Interest, AssociatedInterest, CustomIncome
+from lobbyfacts.model import Interest, AssociatedInterest, CustomIncome, Contact
 from lobbyfacts.data.load.util import to_integer, to_float, upsert_person
 from lobbyfacts.data.load.util import upsert_person, upsert_organisation, upsert_entity, upsert_tag
 from lobbyfacts.core import app
@@ -38,14 +38,8 @@ def load_representative(engine, rep):
     rep['members_75'] = to_integer(rep['members_75'])
     rep['members_100'] = to_integer(rep['members_100'])
     rep['members_fte'] = to_integer(rep['members_fte'])
+    rep['members'] = to_integer(rep['members'])
     rep['number_of_natural_persons'] = to_integer(rep['number_of_natural_persons'])
-
-    rep['contact_lat'] = to_float(rep['contact_lat'])
-    rep['contact_lon'] = to_float(rep['contact_lon'])
-
-    rep['contact_phone'] = " ".join((rep.get('contact_indic_phone') or '', rep.get('contact_phone') or '')).strip()
-    rep['contact_fax'] = " ".join((rep.get('contact_indic_fax') or '', rep.get('contact_fax') or '')).strip()
-    rep['contact_country'] = Country.by_code(rep['country_code'])
 
     if rep.get('main_category'):
         main_category = upsert_category(rep.get('main_category_id'),
@@ -73,6 +67,33 @@ def load_representative(engine, rep):
     else:
         representative.update(rep)
 
+    for contact_data in sl.find(engine, sl.get_table(engine, 'contact'),
+            representative_etl_id=rep['etl_id'], status='active'):
+        if len([x for x in contact_data.values() if x])<7: continue
+        contact_ = {
+            'town': contact_data['town'],
+            'street': contact_data['street'],
+            'post_code': contact_data['post_code'],
+            'postbox': contact_data['postbox'],
+            'lat': to_float(contact_data['lat']),
+            'lon': to_float(contact_data['lon']),
+            'phone': " ".join((contact_data.get('indic_phone') or '', contact_data.get('phone') or '')).strip(),
+            'country': Country.by_code(contact_data['country_code']),
+            }
+
+        if contact_data['type'] == 'head':
+            if representative.head_office_id is None:
+                contact = Contact.create(contact_)
+                representative.head_office=contact
+                representative.contact_country=contact.country
+            else:
+                representative.head_office.update(contact_)
+        else:
+            if representative.be_office_id is None:
+                contact = Contact.create(contact_)
+                representative.be_office=contact
+            else:
+                representative.be_office.update(contact_)
 
     for person, data_ in accreditations:
         data_['person'] = person

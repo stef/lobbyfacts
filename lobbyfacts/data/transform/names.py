@@ -34,8 +34,8 @@ def map_names(map_func, engine, table_name, source_column='name',
 
 def transform(engine):
     countries_func = lambda v, c: country_by_name(v).get('iso2')
-    map_names(countries_func, engine, 'representative',
-            'contact_country', 'country_code')
+    map_names(countries_func, engine, 'contact',
+            'country', 'country_code')
     map_names(countries_func, engine, 'country_of_member',
             'country', 'country_code')
     map_names(countries_func, engine, 'expertgroup_member_country',

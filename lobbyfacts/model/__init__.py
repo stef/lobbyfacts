@@ -1,7 +1,7 @@
 import logging
 
 from lobbyfacts.model.entity import Entity
-from lobbyfacts.model.representative import Representative, Tags
+from lobbyfacts.model.representative import Representative, Tags, Contact
 from lobbyfacts.model.country import Country, CountryMembership
 from lobbyfacts.model.category import Category
 from lobbyfacts.model.person import Person, Accreditation

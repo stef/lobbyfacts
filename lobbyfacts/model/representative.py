@@ -21,6 +21,71 @@ class Tags(db.Model, ApiEntityMixIn):
     def all(cls):
         return db.session.query(cls)
 
+class Contact(db.Model, ApiEntityMixIn, RevisionedMixIn):
+    __tablename__ = 'contact'
+
+    id = db.Column(db.BigInteger, primary_key=True)
+    town = db.Column(db.Unicode)
+    street = db.Column(db.Unicode)
+    phone = db.Column(db.Unicode)
+    post_code = db.Column(db.Unicode)
+    postbox = db.Column(db.Unicode)
+    lat = db.Column(db.Float)
+    lon = db.Column(db.Float)
+    country_id = db.Column(db.BigInteger, db.ForeignKey('country.id'))
+    country = db.relationship('Country', backref=db.backref('contacts'))
+
+    @classmethod
+    def create(cls, data):
+        cls = cls()
+        return cls.update(data)
+
+    def update(self, data):
+        self.street = data.get('street')
+        self.town = data.get('town')
+        self.street = data.get('street')
+        self.phone = data.get('phone')
+        self.post_code = data.get('post_code')
+        self.postbox = data.get('postbox')
+        self.lon = data.get('lon')
+        self.lat = data.get('lat')
+        self.country = data.get('country')
+        self.updated_at=data.get('updated_at')
+        self.deleted_at=data.get('deleted_at')
+        db.session.add(self)
+        return self
+
+    @classmethod
+    def by_id(cls, id):
+        return cls.by_attr(cls.id, id)
+
+    @classmethod
+    def all(cls):
+        return db.session.query(cls)
+
+    def as_shallow(self):
+        d= {
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+            'town': self.town,
+            'street': self.street,
+            'phone': self.phone,
+            'lon': self.lon,
+            'lat': self.lat,
+            'post_code': self.post_code,
+            'postbox': self.postbox,
+            }
+        if self.id:
+            d['id']=self.id
+        return d
+
+    def as_dict(self):
+        d = self.as_shallow()
+        return d
+
+    def __repr__(self):
+        return "<Contact(%s)>" % (' '.join((self.street or '',self.town or '',self.post_code or '',self.country.name)))
+
 class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
     __tablename__ = 'representative'
 
@@ -48,6 +113,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
     info_members = db.Column(db.Unicode)
     structure_members = db.Column(db.Unicode)
 
+    members = db.Column(db.BigInteger, nullable=True)
     members_25 = db.Column(db.BigInteger, nullable=True)
     members_50 = db.Column(db.BigInteger, nullable=True)
     members_75 = db.Column(db.BigInteger, nullable=True)
@@ -59,14 +125,15 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
     registration_date = db.Column(db.DateTime)
     last_update_date = db.Column(db.DateTime)
 
-    contact_town = db.Column(db.Unicode)
-    contact_street = db.Column(db.Unicode)
-    contact_phone = db.Column(db.Unicode)
-    contact_post_code = db.Column(db.Unicode)
-    contact_postbox = db.Column(db.Unicode)
-    contact_fax = db.Column(db.Unicode)
-    contact_lat = db.Column(db.Float)
-    contact_lon = db.Column(db.Float)
+    head_office_id = db.Column(db.BigInteger, db.ForeignKey('contact.id'), nullable=True)
+    head_office = db.relationship('Contact',
+                                  primaryjoin='Representative.head_office_id==Contact.id',
+                                  backref=db.backref('head_offices', uselist=False))
+    be_office_id = db.Column(db.BigInteger, db.ForeignKey('contact.id'), nullable=True)
+    be_office = db.relationship('Contact',
+                                primaryjoin='Representative.be_office_id==Contact.id',
+                                backref=db.backref('be_offices', uselist=False))
+    # for backward compatibility == nationality of rep
     contact_country_id = db.Column(db.BigInteger, db.ForeignKey('country.id'))
 
     main_category_id = db.Column(db.BigInteger, db.ForeignKey('category.id'))
@@ -99,6 +166,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
         self.web_site_url = data.get('web_site_url')
         self.legal_status = data.get('legal_status')
 
+        self.members = data.get('members')
         self.members_25 = data.get('members_25')
         self.members_50 = data.get('members_50')
         self.members_75 = data.get('members_75')
@@ -110,16 +178,6 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
 
         self.registration_date = data.get('registration_date')
         self.last_update_date = data.get('last_update_date')
-
-        self.contact_town = data.get('contact_town')
-        self.contact_street = data.get('contact_street')
-        self.contact_phone = data.get('contact_phone')
-        self.contact_post_code = data.get('contact_post_code')
-        self.contact_postbox = data.get('contact_postbox')
-        self.contact_fax = data.get('contact_fax')
-        self.contact_lon = data.get('contact_lon')
-        self.contact_lat = data.get('contact_lat')
-        self.contact_country = data.get('contact_country')
 
         self.main_category = data.get('main_category')
         self.sub_category = data.get('sub_category')
@@ -158,6 +216,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
             'other_code_of_conduct': self.other_code_of_conduct,
             'web_site_url': self.web_site_url,
             'legal_status': self.legal_status,
+            'members': self.members,
             'members_25': self.members_25,
             'members_50': self.members_50,
             'members_75': self.members_75,
@@ -168,14 +227,6 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
             'number_of_natural_persons': self.number_of_natural_persons,
             'registration_date': self.registration_date,
             'last_update_date': self.last_update_date,
-            'contact_town': self.contact_town,
-            'contact_street': self.contact_street,
-            'contact_phone': self.contact_phone,
-            'contact_lon': self.contact_lon,
-            'contact_lat': self.contact_lat,
-            'contact_post_code': self.contact_post_code,
-            'contact_postbox': self.contact_postbox,
-            'contact_fax': self.contact_fax
             })
         if self.entity:
             d['entity']=self.entity_id
@@ -183,6 +234,15 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
             d['acronym']=self.entity.acronym
         if self.contact_country:
             d['contact_country']=self.contact_country_id
+        if self.head_office:
+            d['head_office_phone']=self.head_office.phone
+            d['head_office_street']=self.head_office.street
+            d['head_office_town']=self.head_office.town
+            d['head_office_post_code']=self.head_office.post_code
+            d['head_office_postbox']=self.head_office.postbox
+            d['head_office_lat']=self.head_office.lat
+            d['head_office_lon']=self.head_office.lon
+            d['head_office_country']=self.head_office.country.name
         if self.main_category:
             d['main_category']=self.main_category_id
             d['main_category_title']=self.main_category.name
@@ -193,13 +253,25 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
             d['head']=self.head_id
         if self.legal:
             d['legal']=self.legal_id
+        if self.be_office:
+            d['be_office_phone']=self.be_office.phone
+            d['be_office_street']=self.be_office.street
+            d['be_office_town']=self.be_office.town
+            d['be_office_post_code']=self.be_office.post_code
+            d['be_office_postbox']=self.be_office.postbox
+            d['be_office_lat']=self.be_office.lat
+            d['be_office_lon']=self.be_office.lon
+            d['be_office_country']=self.be_office.country.name
         return d
 
     def as_dict(self):
-        d = self.as_shallow()
+        # shallow but without flattened office info
+        d = {k:v for k,v in self.as_shallow().items() if not k.startswith('head_office') and not k.startswith('be_office')}
         d.update({
             'entity': self.entity.as_shallow() if self.entity else None,
             'contact_country': self.contact_country.as_shallow() if self.contact_country else None,
+            'head_office': self.head_office.as_shallow() if self.head_office else None,
+            'be_office': self.be_office.as_shallow() if self.be_office else None,
             'main_category': self.main_category.as_shallow() if self.main_category else None,
             'sub_category': self.sub_category.as_shallow() if self.sub_category else None,
             'head': self.head.as_shallow() if self.head else None,
@@ -226,5 +298,3 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
 
 Entity.representative = db.relationship(Representative,
         uselist=False, backref=db.backref('entity'))
-
-

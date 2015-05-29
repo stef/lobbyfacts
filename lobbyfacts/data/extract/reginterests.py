@@ -60,25 +60,27 @@ def parse_rep(rep_el):
             'position')
     rep['head_person'] = head
 
-    rep['contact_street'] = ' '.join((
-        rep_el.findtext(NS + 'contactDetails/' + NS + 'addressline1') or '',
-        rep_el.findtext(NS + 'contactDetails/' + NS + 'addressline2') or '',
-        rep_el.findtext(NS + 'contactDetails/' + NS + 'addressline2') or ''))
-    rep['contact_postbox'] = rep_el.findtext(NS + 'contactDetails/' + NS + 'postBox')
-    rep['contact_post_code'] = rep_el.findtext(NS + 'contactDetails/' + NS
-            + 'postCode')
-    rep['contact_town'] = rep_el.findtext(NS + 'contactDetails/' + NS
-            + 'town')
-    rep['contact_country'] = rep_el.findtext(NS + 'contactDetails/' + NS
-            + 'country')
-    rep['contact_indic_phone'] = rep_el.findtext(NS + 'contactDetails//' + NS
-            + 'indicPhone')
-    rep['contact_indic_fax'] = rep_el.findtext(NS + 'contactDetails//' + NS
-            + 'indicFax')
-    rep['contact_fax'] = rep_el.findtext(NS + 'contactDetails//' + NS
-            + 'fax')
-    rep['contact_phone'] = rep_el.findtext(NS + 'contactDetails//' + NS
-            + 'phoneNumber')
+    for tag in ['contactDetails/', 'contactDetailsBelgium/']:
+        contact={}
+        contact['street'] = ' '.join((
+            rep_el.findtext(NS + tag + NS + 'addressline1') or '',
+            rep_el.findtext(NS + tag + NS + 'addressline2') or '',
+            rep_el.findtext(NS + tag + NS + 'addressline2') or ''))
+        contact['postbox'] = rep_el.findtext(NS + tag + NS + 'postBox')
+        contact['post_code'] = rep_el.findtext(NS + tag + NS + 'postCode')
+        contact['town'] = rep_el.findtext(NS + tag + NS + 'town')
+        contact['country'] = rep_el.findtext(NS + tag + NS + 'country')
+        contact['indic_phone'] = rep_el.findtext(NS + tag +'/'+NS+'phone/'+ NS + 'indicPhone')
+        contact['phone'] = rep_el.findtext(NS + tag +'/'+NS+'phone/'+ NS + 'phoneNumber')
+        if tag == 'contactDetails/' and contact != {}:
+            contact['type']='head'
+            rep['head_contact']=contact
+        elif tag == 'contactDetailsBelgium/' and contact != {}:
+            contact['type']='belgium'
+            rep['be_contact']=contact
+        else:
+            raise ValueError(tag) # should never happen
+
     rep['goals'] = rep_el.findtext(NS + 'goals')
     act_cats = [
         ('activityConsultCommittees', 'activity_consult_committees'),
@@ -102,6 +104,7 @@ def parse_rep(rep_el):
     rep['members_100'] = rep_el.findtext('.//' + NS + 'members100Percent')
     rep['members_fte'] = rep_el.findtext('.//' + NS + 'membersFTE')
     rep['info_members'] = rep_el.findtext('.//' + NS + 'infoMembers')
+    rep['members'] = rep_el.findtext('.//' + NS + 'members/' + NS + 'members')
 
     rep['action_fields'] = []
     for field in rep_el.findall('.//' + NS + 'actionField/' + NS +
@@ -250,6 +253,13 @@ def load_person(person, role, childBase, engine):
                                        'name'])
 
 
+def load_contact(contact, childBase, engine):
+    if contact == {}: return
+    table = sl.get_table(engine, 'contact')
+    contact_ = childBase.copy()
+    contact_.update(contact)
+    sl.upsert(engine, table, contact_, ['representative_etl_id', 'country'])
+
 def load_finances(financialData, childBase, engine):
     if financialData == {}: return
     etlId = '%s//%s' % (financialData['start_date'].isoformat(),
@@ -291,6 +301,10 @@ def load_rep(rep, engine):
     if not rep['original_name']:
         log.error("Unnamed representative: %r", rep)
         return
+
+    load_contact(rep.pop('head_contact',{}), childBase, engine)
+    load_contact(rep.pop('be_contact',{}), childBase, engine)
+
     load_person(rep.pop('legal_person'), 'legal', childBase, engine)
     load_person(rep.pop('head_person'), 'head', childBase, engine)
     for actionField in rep.pop('action_fields'):
@@ -339,6 +353,7 @@ def extract_data(engine, data):
 def extract(engine):
     try:
         sl.update(engine, 'representative', {}, {'status': 'inactive'}, ensure=False)
+        sl.update(engine, 'contact', {}, {'status': 'inactive'}, ensure=False)
         sl.update(engine, 'financial_data', {}, {'status': 'inactive'}, ensure=False)
         sl.update(engine, 'financial_data_turnover', {}, {'status': 'inactive'}, ensure=False)
         sl.update(engine, 'person', {}, {'status': 'inactive'}, ensure=False)
