@@ -68,6 +68,8 @@ class AssociatedInterest(db.Model, RevisionedMixIn, ApiEntityMixIn):
     interest_id = db.Column(db.BigInteger(), db.ForeignKey('interest.id'))
     status = db.Column(db.Unicode)
 
+    index = db.Index('idx_rpi', 'representative_id', 'interest_id')
+
     interest = db.relationship(Interest,
             backref=db.backref('associated_reps',
                 lazy='dynamic',
