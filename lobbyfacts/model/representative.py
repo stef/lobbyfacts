@@ -118,7 +118,7 @@ class Representative(db.Model, RevisionedMixIn, ApiEntityMixIn):
     members_50 = db.Column(db.BigInteger, nullable=True)
     members_75 = db.Column(db.BigInteger, nullable=True)
     members_100 = db.Column(db.BigInteger, nullable=True)
-    members_fte = db.Column(db.BigInteger, nullable=True)
+    members_fte = db.Column(db.Float, nullable=True)
 
     number_of_natural_persons = db.Column(db.BigInteger, nullable=True)
 
