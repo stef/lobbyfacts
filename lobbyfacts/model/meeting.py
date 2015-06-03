@@ -21,6 +21,42 @@ class MeetingParticipants(db.Model, RevisionedMixIn):
     def all(cls):
         return db.session.query(cls)
 
+class MeetingDeregistered(db.Model, RevisionedMixIn):
+    __tablename__ = 'meeting_deregistered'
+    meeting_id = db.Column('meeting_id', db.String(32), db.ForeignKey('meeting.id'), primary_key=True)
+    identification_code = db.Column(db.Unicode, primary_key=True)
+    name = db.Column(db.Unicode)
+    status = db.Column(db.Unicode)
+    deregistered = db.relationship('Meeting',
+                                   primaryjoin='Meeting.id==MeetingDeregistered.meeting_id',
+                                   backref=db.backref('deregistered'))
+
+    def update_values(self, data):
+        self.meeting_id = data.get('meeting_id')
+        self.name = data.get('name')
+        self.identification_code = data.get('identification_code')
+        self.status = data.get('status')
+
+    @classmethod
+    def by_midc(cls, meeting, identification_code):
+        q = db.session.query(cls)
+        q = q.filter(cls.meeting_id==meeting.id)
+        q = q.filter(cls.identification_code==identification_code)
+        return q.first()
+
+    def as_shallow(self):
+        return { 'name': self.name,
+                 'identification_code': self.identification_code,
+                 'status': self.status,
+                 'meeting': self.meeting_id}
+
+    def as_dict(self):
+        return self.as_shallow()
+
+    @classmethod
+    def all(cls):
+        return db.session.query(cls)
+
 class Meeting(db.Model, RevisionedMixIn):
     __tablename__ = 'meeting'
 
@@ -61,7 +97,8 @@ class Meeting(db.Model, RevisionedMixIn):
             'date': self.date,
             'location': self.location,
             'subject': self.subject,
-            'participants': ', '.join(["%s(%s)" % (p.id,p.entity.name if p.entity else 'unknown') for p in self.participants]),
+            'participants': ', '.join(["%s(%s)" % (p.entity.name, p.id) for p in self.participants]),
+            'deregistered': ', '.join(["%s(%s)" % (p.name, p.identification_code) for p in self.deregistered]),
             'unregistered': self.unregistered,
             'cancelled': self.cancelled})
         return d
@@ -69,7 +106,8 @@ class Meeting(db.Model, RevisionedMixIn):
     def as_dict(self):
         d = self.as_shallow()
         d.update({
-            'participants': [p.as_shallow() for p in self.participants]
+            'participants': [p.as_shallow() for p in self.participants],
+            'deregistered': [p.as_shallow() for p in self.deregistered]
             })
         return d
 

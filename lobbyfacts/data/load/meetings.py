@@ -2,7 +2,7 @@ import logging
 
 from lobbyfacts.core import db
 from lobbyfacts.data import sl, etl_engine
-from lobbyfacts.model import Representative, Meeting
+from lobbyfacts.model import Representative, Meeting, MeetingDeregistered
 from lobbyfacts.core import app
 from datetime import datetime
 
@@ -43,14 +43,21 @@ def load_meeting(engine, meet):
         rep = Representative.by_identification_code(meet['identification_code'])
         if rep is None:
             #print "could not match", meet['identification_code']
-            if meeting.unregistered:
-                meeting.unregistered='; '.join(sorted(set(meeting.unregistered.split('; ')+
-                                                        ["%s(%s)" % (meet['representative'],
-                                                                     meet['identification_code'])])))
-                print 'appended', meeting.unregistered
+            dereg_ = {'name': meet['representative'],
+                      'identification_code': meet['identification_code'],
+                      'status': meet['status'],
+                      'meeting_id': meeting.id}
+            if meeting.deregistered:
+                dereg = MeetingDeregistered.by_midc(meeting,meet['identification_code'])
+                if not dereg:
+                    dereg = MeetingDeregistered.create(dereg_)
+                    meeting.deregistered.append(dereg)
+                    print 'appended', meeting.unregistered
+                else:
+                    dereg.update(dereg_)
             else:
-                meeting.unregistered="%s(%s)" % (meet['representative'],meet['identification_code'])
-                print 'created', meeting.unregistered.encode('utf8')
+                dereg = MeetingDeregistered.create(dereg_)
+                meeting.deregistered.append(dereg)
 
         else:
             #print "\o/ match", meet['representative'], meet['identification_code']
