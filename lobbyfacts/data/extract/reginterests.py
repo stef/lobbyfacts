@@ -72,10 +72,10 @@ def parse_rep(rep_el):
         contact['country'] = rep_el.findtext(NS + tag + NS + 'country')
         contact['indic_phone'] = rep_el.findtext(NS + tag +'/'+NS+'phone/'+ NS + 'indicPhone')
         contact['phone'] = rep_el.findtext(NS + tag +'/'+NS+'phone/'+ NS + 'phoneNumber')
-        if tag == 'contactDetails/' and contact != {}:
+        if tag == 'contactDetails/':
             contact['type']='head'
             rep['head_contact']=contact
-        elif tag == 'contactDetailsBelgium/' and contact != {}:
+        elif tag == 'contactDetailsBelgium/':
             contact['type']='belgium'
             rep['be_contact']=contact
         else:
