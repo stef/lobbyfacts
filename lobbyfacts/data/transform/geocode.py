@@ -15,7 +15,7 @@ def transform(engine):
     table = sl.get_table(engine, 'contact')
     for row in sl.all(engine, table):
         out = {'id': row['id']}
-        if row.get('contact_lon'):
+        if row.get('lon'):
             continue
         query = {
             'format': 'json',
