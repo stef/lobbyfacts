@@ -258,7 +258,7 @@ def load_contact(contact, childBase, engine):
     table = sl.get_table(engine, 'contact')
     contact_ = childBase.copy()
     contact_.update(contact)
-    sl.upsert(engine, table, contact_, ['representative_etl_id', 'country'])
+    sl.upsert(engine, table, contact_, ['representative_etl_id', 'country', 'type'])
 
 def load_finances(financialData, childBase, engine):
     if financialData == {}: return
