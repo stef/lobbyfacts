@@ -18,7 +18,7 @@ HEADERS =  { 'User-agent': 'lobbyfacts/1.2' }
 
 mainurl="http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=595cf53f-c018-4fc8-afa0-9d66c289795c&d-6679426-p="
 trurl="http://ec.europa.eu/transparencyregister/public/consultation/displaylobbyist.do?id="
-tregidre=re.compile('[0-9]{10,12}-[0-9]{2}')
+tregidre=re.compile('[0-9]{9,12}-[0-9]{2}')
 
 h = HTMLParser.HTMLParser()
 
