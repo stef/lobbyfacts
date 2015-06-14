@@ -6,16 +6,16 @@ class MeetingParticipants(db.Model, RevisionedMixIn):
     __tablename__ = 'meeting_participants'
     representative_id = db.Column('representative_id', db.String(36), db.ForeignKey('representative.id'), primary_key=True)
     meeting_id = db.Column('meeting_id', db.String(32), db.ForeignKey('meeting.id'), primary_key=True)
-    status = db.Column(db.Unicode)
 
     def as_shallow(self):
-        return { 'representative': Representative.by_id(self.representative_id).entity.name,
-                 'status': self.status,
-                 'meetings': Meeting.by_id(self.meeting_id),
-                 'representative_id': self.representative_id }
+        return {'meeting_id': self.meeting_id,
+                'representative_id': self.representative_id }
 
     def as_dict(self):
-        return self.as_shallow()
+        res = self.as_shallow()
+        res['representative']= Representative.by_id(self.representative_id).entity.name
+        res['meeting']= Meeting.by_id(self.meeting_id)
+        return res
 
     @classmethod
     def all(cls):
