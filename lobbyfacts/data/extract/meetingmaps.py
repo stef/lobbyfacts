@@ -94,6 +94,7 @@ uuids = [ (u'President Jean-Claude Juncker', u'http://ec.europa.eu/transparencyi
           (u'Director of the Office Marc Lemaître', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=c9dd58ff-4f2e-4e64-83c0-0ef45573239d'),
           (u'Director-General Irene Souka', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=5f6cf615-e3f3-495a-846a-9ccc191e86fc'),
           (u'Director of the Office David Bearfield', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=34cd9679-7e50-4f41-910a-7b9caf0beba4'),
+          (u'Director of the Service Tung-Laï Margue', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=3bb86a7d-035a-4a39-8226-c46622754eb2'),
           (u'Secretary-General Catherine Day', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=394df231-6f63-43a1-ac2f-a5c6c2aea0b7') ]
 
 entmap = {
