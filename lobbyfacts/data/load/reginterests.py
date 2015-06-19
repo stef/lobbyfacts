@@ -37,7 +37,7 @@ def load_representative(engine, rep):
     rep['members_50'] = to_integer(rep['members_50'])
     rep['members_75'] = to_integer(rep['members_75'])
     rep['members_100'] = to_integer(rep['members_100'])
-    rep['members_fte'] = to_integer(rep['members_fte'])
+    rep['members_fte'] = to_float(rep['members_fte'])
     rep['members'] = to_integer(rep['members'])
     rep['number_of_natural_persons'] = to_integer(rep['number_of_natural_persons'])
 
