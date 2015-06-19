@@ -1,5 +1,5 @@
 from datetime import datetime
-import logging
+import logging, sys
 from lxml import etree
 from pprint import pprint
 
@@ -64,5 +64,10 @@ def extract(engine):
 
 if __name__ == '__main__':
     engine = etl_engine()
-    extract(engine)
-
+    if len(sys.argv)<2:
+        # extract current
+        extract(engine)
+    else:
+        # extract from file
+        with open(sys.argv[1],'r') as fd:
+            extract_data(engine, fd.read().decode('utf-8'))
