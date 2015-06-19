@@ -22,22 +22,23 @@ SUBCATEGORIES = {
     u'Trade, business & professional associations': 22,
     u'Trade unions': 23,
     u'Other similar organisations': 24,
+    u'Trade and business organisations': 25,
+    u'Trade unions and professional associations': 26,
+    u'Other in house lobbyists':27,
     u'Non-governmental organisations, platforms and networks and similar': 31,
     u'Think tanks and research institutions': 41,
     u'Academic institutions': 42,
     u'Organisations representing churches and religious communities': 51,
     u'Local, regional and municipal authorities (at sub-national level)': 61,
-    u'Other public or mixed entities, etc.': 62
-    }
+    u'Other public or mixed entities, etc.': 62,
+    u'Regional structures': 63,
+    u'Other sub-national public authorities': 64,
+    u'Transnational associations and networks of public regional or other sub-national authorities': 65,
+    u'Other public or mixed entities, created by law whose purpose is to act in the public interest': 66}
 
 newcats = {u'II - In-house lobbyists and trade/business/professional associations': u'II - In-house lobbyists and trade/professional associations'}
-newsubcats = { u'Other organisations':u'Other similar organisations',
-               u'Trade and business associations': u'Trade, business & professional associations',
-               u'Trade unions and professional associations': u'Trade, business & professional associations',
-               u'Other sub-national public authorities': u'Local, regional and municipal authorities (at sub-national level)',
-               u'Regional structures': u'Local, regional and municipal authorities (at sub-national level)',
-               u'Other public or mixed entities, created by law whose purpose is to act in the public interest': u'Other public or mixed entities, etc.',
-               u'Transnational associations and networks of public regional or other sub-national authorities': u'Local, regional and municipal authorities (at sub-national level)',
+newsubcats = { u'Other organisations':u'Other in house lobbyists',
+               u'Trade and business associations': u'Trade and business organisations',
              }
 
 def remap_categories(engine):
