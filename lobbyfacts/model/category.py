@@ -61,6 +61,7 @@ class Category(db.Model, ApiEntityMixIn):
             'name': self.name,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
+            'items': self.main_reps.count()+self.sub_reps.count(),
             'parent': self.parent_id
             }
 
