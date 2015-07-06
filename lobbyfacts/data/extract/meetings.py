@@ -61,11 +61,12 @@ def get_ents(nodes):
         end = start+lm[start:].index('"')
         tregid = lm[start:end]
         name = h.unescape(name[end+2:].strip())
+        if not name: continue
         if name in entmap:
             name, tregid = entmap[name]
         elif not tregidre.match(tregid):
             tregid = 'unregistered'
-            print >>sys.stderr, name.encode('utf8')
+            print >>sys.stderr, '[!] unregistered?', name.encode('utf8')
         ents.append((name, tregid))
     return ents
 
@@ -73,8 +74,8 @@ def scrape(url, title):
     while True:
         try: root = fetch(url)
         except:
-            print url
-            raise
+            print >>sys.stderr, 'failed to fetch url', sys.exc_info(), url
+            break
 
         for row in root.xpath('//table[@id="listMeetingsTable"]/tbody/tr'):
             fields = row.xpath('.//td')
