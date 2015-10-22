@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 uuids = [ (u'President Jean-Claude Juncker', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=829436d0-1850-424f-aebe-6dd76c793be2'),
-          (u'Cabinet members of President Jean-Claude Juncker', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=91b45ce8-2ff0-4e67-b5b5-b42151217f13&d-6679426-p='),
+          (u'Cabinet members of President Jean-Claude Juncker', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=91b45ce8-2ff0-4e67-b5b5-b42151217f13'),
           (u'First Vice-President Frans Timmermans', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=b47bf526-b773-40e7-9392-89d454e0672f'),
           (u'Cabinet members of First Vice-President Frans Timmermans', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=f3715246-e6ff-4856-b9d8-1ed4f86738b7'),
           (u'High Representative/Vice-President Federica Mogherini', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=6e27e5b2-65cf-4733-99b1-0a5e094088c1'),
