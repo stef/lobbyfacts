@@ -95,7 +95,13 @@ uuids = [ (u'President Jean-Claude Juncker', u'http://ec.europa.eu/transparencyi
           (u'Director-General Irene Souka', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=5f6cf615-e3f3-495a-846a-9ccc191e86fc'),
           (u'Director of the Office David Bearfield', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=34cd9679-7e50-4f41-910a-7b9caf0beba4'),
           (u'Director of the Service Tung-Laï Margue', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=3bb86a7d-035a-4a39-8226-c46622754eb2'),
-          (u'Secretary-General Catherine Day', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=394df231-6f63-43a1-ac2f-a5c6c2aea0b7') ]
+          (u'Secretary-General Catherine Day', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=394df231-6f63-43a1-ac2f-a5c6c2aea0b7'),
+          (u'', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=5c328854-7554-4e37-8142-02605dd76334&startDate=01-09-2015'),
+          (u'', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=df6d8307-5772-45fb-a234-be95f3186c1f'),
+          (u'', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=4e595d6e-b89a-465b-9b63-b293c8fd8e30'),
+          (u'', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=242a8924-48a5-4983-b75f-fab577a950b7'),
+          (u'', u'http://ec.europa.eu/transparencyinitiative/meetings/meeting.do?host=10539654-6864-48fd-b947-dabedf1a218a'),
+          ]
 
 entmap = {
     u'NEREUS - Network of European Regions Using Space Technologies': (u'NEREUS - Network of European Regions Using Space Technologies', '894707011106-07'),
