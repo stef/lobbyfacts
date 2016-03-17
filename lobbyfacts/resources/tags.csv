@@ -34,67 +34,85 @@ id,name,tags
 732259614632-44,Tata Group,"sector:car industry,issue:cars"
 08618215943-22,Jaguar Land Rover,"sector:car industry,issue:cars"
 74574295642-60,Volvo Car Corporation AB,"sector:car industry,issue:cars"
-51925911965-76,Philip Morris International,"sector:tobacco industry, issue:TPD review"
-62460931291-40,Imperial Tobacco Group,"sector:tobacco industry, issue:TPD review"
-,Reemtsma,"sector:tobacco industry, issue:TPD review"
-2427500988-58,British American Tobacco,"sector:tobacco industry, issue:TPD review"
-71175716023-03,Japan Tobacco (JT) International Holding,"sector:tobacco industry, issue:TPD review"
-56705163713-93,Swedish Match,"sector:tobacco industry, issue:TPD review"
-15067204668-85,Hunters & Frankau Limited,"sector:tobacco industry, issue:TPD review"
-,House of Oliver Twist,"sector:tobacco industry, issue:TPD review"
-,Assens Tobaksfabrik,"sector:tobacco industry, issue:TPD review"
-1496873833-97,Confederation of European Community Cigarette Manufacturers,"sector:tobacco industry, issue:TPD review"
-0138855852-93,European Smoking Tobacco Association,"sector:tobacco industry, issue:TPD review"
-76631212796-76,European Smokeless Tobacco Council,"sector:tobacco industry, issue:TPD review"
-47922738433-52,Tobacco Industry Platform,"sector:tobacco industry, issue:TPD review"
-,European Association of Tobacco Growers,"sector:tobacco industry, issue:TPD review"
-85326064523-94,Confédération Européenne des Détaillants en Tabac,"sector:tobacco industry, issue:TPD review"
-208449710537-54, Federatie van de sigarenindustrie in België en Luxemburg,"sector:tobacco industry, issue:TPD review"
-92802501097-37,European Cigar Manufacturers Association,"sector:tobacco industry, issue:TPD review"
-,International Tobacco Growers’ Association,"sector:tobacco industry, issue:TPD review"
-16135192686-50,Groupement des Industriels Européens du Tabac,"sector:tobacco industry, issue:TPD review"
-68037164462-39,Imported Tobacco Products Advisory Council,"sector:tobacco industry, issue:TPD review"
-63177694602-56,Fédération de l'industrie du tabac de coupe en Belgique et au Luxembourg,"sector:tobacco industry, issue:TPD review"
-94376854542-25,Cigarette Manufacturers of Belgium and Luxembourg,"sector:tobacco industry, issue:TPD review"
-78764438624-42,Federazione Italiana Tabaccai,"sector:tobacco industry, issue:TPD review"
-27567784437-46,"Tobaksindustrien, (Tobacco Manufactures Association of Denmark)","sector:tobacco industry, issue:TPD review"
-36386526255-04,Interessengemeinschaft Tabakwirtschaft e.V.,"sector:tobacco industry, issue:TPD review"
-78982871558-95,Deutscher Zigarettenverband e.V.,"sector:tobacco industry, issue:TPD review"
-87594253741-94,Bundesverband Deutscher Tabakwaren-Großhändler und Automatenaufsteller e.V.,"sector:tobacco industry, issue:TPD review"
-79170323734-59,Europäischer Tabakwaren-Grosshandels Verband e.V.,"sector:tobacco industry, issue:TPD review"
-92573623984-60,Verband der deutschen Rauchtabakindustrie e.V.,"sector:tobacco industry, issue:TPD review"
-55551597307-48,Bundesverband der Zigarrenindustrie,"sector:tobacco industry, issue:TPD review"
-,Magyar Dohánytermelők Országos Szövetsége (Hungarian Tobacco Growers’ Association),"sector:tobacco industry, issue:TPD review"
-30971284469-05,Association of Independent Tobacco Specialists,"sector:tobacco industry, issue:TPD review"
-782918510959-35,Schweitzer Mauduit International,"sector:tobacco industry, issue:TPD review"
-45859743553-04,European Rolling Paper Association,"sector:tobacco industry, issue:TPD review"
-392494110294-75,Associazione Professionale Trasformatori Tabacchi Italiani,"sector:tobacco industry, issue:TPD review"
-198242310877-72,Alliance of Northern European Tobacco and Convenience Retail Organsations,"sector:tobacco industry, issue:TPD review"
-,European Federation of Tobacco Processors,"sector:tobacco industry, issue:TPD review"
-298578510773-22,Electronic Cigarette Industry Trade Association,issue:TPD review
-133147210732-65,Elektronische Sigaretten Bond Nederland,issue:TPD review
-071789410767-67,Greek Electronic Cigarette Trade Association,issue:TPD review
-57880396344-21,Stichting Elektrisch Dampen Nederland,issue:TPD review
-711092410756-80,Verband des eZigarettenhandels,issue:TPD review
-169778610761-14,Tobacco Vapor Electronic Cigarette Association,issue:TPD review
-829392410814-85,NJOY,issue:TPD review
-388458811677-57,Interessengemeinschaft E-Dampfen e. V.,issue:TPD review
-90905271757-87,European Travel Retail Confederation,issue:TPD review
-97131823590-44,MARQUES,issue:TPD review
-012012710584-34,Comité de Liaison du Commerce Agro-Alimentaire,issue:TPD review
-53138734760-09,Nederlandse Organisatie Voor de Energiebranche,issue:TPD review
-685637510818-17,Polska Izba Handlu / Polish Chamber of Commerce,issue:TPD review
-67397672117-65,Food and Drink Federation (UK),issue:TPD review
-948591610750-02,European Carton Makers Association,issue:TPD review
-18941013532-08,European Public Health Alliance,issue:TPD review
-6403725595-50,The Smoke Free Partnership,issue:TPD review
-234045010359-36,European Institute of Womens Health,issue:TPD review
-17882036839-35,European Network for Smoking and Tobacco Prevention,issue:TPD review
-82494487698-33,World Federation Against Drugs,issue:TPD review
-28473847513-94,European Federation of Allergy and Airways Diseases Patients' Associations,issue:TPD review
-53258597884-77,Association Nationale de Prevention en Alcoologie et Addictologie,issue:TPD review
-805334410556-18,Deutscher Jugendschutz-Verband,issue:TPD review
-610988810827-74,Freedom Organisation for the Right to Enjoy Smoking Tobacco,issue:TPD review
+51925911965-76,Philip Morris International,"sector:tobacco industry, issue:tobacco control"
+62460931291-40,Imperial Tobacco Group,"sector:tobacco industry, issue:tobacco control"
+2427500988-58,British American Tobacco,"sector:tobacco industry, issue:tobacco control"
+71175716023-03,Japan Tobacco (JT) International Holding,"sector:tobacco industry, issue:tobacco control"
+56705163713-93,Swedish Match,"sector:tobacco industry, issue:tobacco control"
+15067204668-85,Hunters & Frankau Limited,"sector:tobacco industry, issue:tobacco control"
+,House of Oliver Twist,"sector:tobacco industry, issue:tobacco control"
+,Assens Tobaksfabrik,"sector:tobacco industry, issue:tobacco control"
+1496873833-97,Confederation of European Community Cigarette Manufacturers,"sector:tobacco industry, issue:tobacco control"
+0138855852-93,European Smoking Tobacco Association,"sector:tobacco industry, issue:tobacco control"
+76631212796-76,European Smokeless Tobacco Council,"sector:tobacco industry, issue:tobacco control"
+47922738433-52,Tobacco Industry Platform,"sector:tobacco industry, issue:tobacco control"
+,European Association of Tobacco Growers,"sector:tobacco industry, issue:tobacco control"
+85326064523-94,Confédération Européenne des Détaillants en Tabac,"sector:tobacco industry, issue:tobacco control"
+208449710537-54,Federatie van de sigarenindustrie in België en Luxemburg,"sector:tobacco industry, issue:tobacco control"
+92802501097-37,European Cigar Manufacturers Association,"sector:tobacco industry, issue:tobacco control"
+,International Tobacco Growers’ Association,"sector:tobacco industry, issue:tobacco control"
+16135192686-50,Groupement des Industriels Européens du Tabac,"sector:tobacco industry, issue:tobacco control"
+68037164462-39,Imported Tobacco Products Advisory Council,"sector:tobacco industry, issue:tobacco control"
+63177694602-56,Fédération de l'industrie du tabac de coupe en Belgique et au Luxembourg,"sector:tobacco industry, issue:tobacco control"
+94376854542-25,Cigarette Manufacturers of Belgium and Luxembourg,"sector:tobacco industry, issue:tobacco control"
+78764438624-42,Federazione Italiana Tabaccai,"sector:tobacco industry, issue:tobacco control"
+27567784437-46,"Tobaksindustrien, (Tobacco Manufactures Association of Denmark)","sector:tobacco industry, issue:tobacco control"
+36386526255-04,Interessengemeinschaft Tabakwirtschaft e.V.,"sector:tobacco industry, issue:tobacco control"
+78982871558-95,Deutscher Zigarettenverband e.V.,"sector:tobacco industry, issue:tobacco control"
+87594253741-94,Bundesverband Deutscher Tabakwaren-Großhändler und Automatenaufsteller e.V.,"sector:tobacco industry, issue:tobacco control"
+79170323734-59,Europäischer Tabakwaren-Grosshandels Verband e.V.,"sector:tobacco industry, issue:tobacco control"
+92573623984-60,Verband der deutschen Rauchtabakindustrie e.V.,"sector:tobacco industry, issue:tobacco control"
+55551597307-48,Bundesverband der Zigarrenindustrie,"sector:tobacco industry, issue:tobacco control"
+,Magyar Dohánytermelők Országos Szövetsége (Hungarian Tobacco Growers’ Association),"sector:tobacco industry, issue:tobacco control"
+30971284469-05,Association of Independent Tobacco Specialists,"sector:tobacco industry, issue:tobacco control"
+782918510959-35,Schweitzer Mauduit International,"sector:tobacco industry, issue:tobacco control"
+45859743553-04,European Rolling Paper Association,"sector:tobacco industry, issue:tobacco control"
+392494110294-75,Associazione Professionale Trasformatori Tabacchi Italiani,"sector:tobacco industry, issue:tobacco control"
+198242310877-72,Alliance of Northern European Tobacco and Convenience Retail Organsations,"sector:retail, issue:tobacco control"
+,European Federation of Tobacco Processors,"sector:tobacco industry, issue:tobacco control"
+558430817570-09,Electronic Cigarette Industry Trade Association,"sector:ecigs, issue:tobacco control"
+133147210732-65,Elektronische Sigaretten Bond Nederland,"sector:ecigs, issue:tobacco control"
+071789410767-67,Greek Electronic Cigarette Trade Association,"sector:ecigs, issue:tobacco control"
+57880396344-21,Stichting Elektrisch Dampen Nederland,"sector:ecigs, issue:tobacco control"
+711092410756-80,Verband des eZigarettenhandels,"sector:ecigs, issue:tobacco control"
+169778610761-14,Tobacco Vapor Electronic Cigarette Association,"sector:ecigs, issue:tobacco control"
+829392410814-85,NJOY,"sector:ecigs, issue:tobacco control"
+388458811677-57,Interessengemeinschaft E-Dampfen e. V.,"sector:ecigs, issue:tobacco control"
+90905271757-87,European Travel Retail Confederation,"sector:retail, issue:tobacco control"
+97131823590-44,MARQUES,issue:tobacco control
+012012710584-34,Comité de Liaison du Commerce Agro-Alimentaire,issue:tobacco control
+685637510818-17,Polska Izba Handlu / Polish Chamber of Commerce,issue:tobacco control
+948591610750-02,European Carton Makers Association,issue:tobacco control
+18941013532-08,European Public Health Alliance,issue:tobacco control
+6403725595-50,The Smoke Free Partnership,issue:tobacco control
+234045010359-36,European Institute of Womens Health,issue:tobacco control
+17882036839-35,European Network for Smoking and Tobacco Prevention,issue:tobacco control
+82494487698-33,World Federation Against Drugs,issue:tobacco control
+28473847513-94,European Federation of Allergy and Airways Diseases Patients' Associations,issue:tobacco control
+53258597884-77,Association Nationale de Prevention en Alcoologie et Addictologie,issue:tobacco control
+805334410556-18,Deutscher Jugendschutz-Verband,issue:tobacco control
+610988810827-74,Freedom Organisation for the Right to Enjoy Smoking Tobacco,issue:tobacco control
+067811515680-81,Tobaksproducenterne,"sector:tobacco industry, issue:tobacco control"
+389796615375-43,Asociación Empresarial del Tabaco (ADELTA),"sector:tobacco industry, issue:tobacco control"
+0252041578-30,Asociatia pentru Protectia Consumatorilor din Romania (APC Romania),issue:tobacco control
+13376004824-21,BlueLink (BlueLink.net),issue:tobacco control
+33130841043-14,"European Federation of Food, Agriculture and Tourism Trade Unions (EFFAT)",issue:tobacco control
+63323472608-78 ,Global Acetate Manufacturers Association (GAMA),"sector:tobacco industry, issue:tobacco control"
+402378214576-35,Shantalla Inc,"sector:consultancy, issue:tobacco control"
+9276943405-41,Standing Committee of European Doctors (CPME),issue:tobacco control
+640787712903-96,Trading Standards Institute (TSI),issue:tobacco control
+373523812662-03,WestRock (WRK),"sector:tobacco industry, issue:tobacco control"
+096916613319-70,"Federatie van de sigarenindustrie in België en Luxemburg, in het Frans ""Fédération de l'industrie du cigare en Belgique et au Luxembourg"" (FECIBEL)","sector:tobacco industry, issue:tobacco control"
+835059415132-95,FÉDÉRATION EUROPÉENNE DES TRANSFORMATEURS DE TABAC (FETRATAB),"sector:tobacco industry, issue:tobacco control"
+992281213344-90,Absolut Vapor,"sector:ecigs, issue:tobacco control"
+14541128505-57,UNITAB,"sector:tobacco industry, issue:tobacco control"
+893051418243-43,Fondation contre le Cancer / Stichting tegen Kanker,issue:tobacco control
+370038516025-12,The Anti-Counterfeiting Group,"sector:business association, issue:tobacco control"
+929475117400-34,PT Djarum,"sector:tobacco industry, issue:tobacco control"
+029812417517-16,Irish Cancer Society,issue:tobacco control
+36443386820-19,European COPD Coalition,issue:tobacco control
+3606882168-35,European Heart Network,issue:tobacco control
+54970512687-47,Cancer Research UK,issue:tobacco control
 ,FOGAIN WG - Fondo General de Garantia de Inversiones,"sector:financial lobby"
 ,RARE Infrastructure,"sector:financial lobby"
 ,Investor Compensation Company Limited,"sector:financial lobby"
